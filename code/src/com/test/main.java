@@ -32,7 +32,7 @@ public class main {
     	}
     	test.array = subArrayObjects;
     	byte[] bytes = tlv.toBytes(test);
-    	Logger.d(TAG, UtilByte.byte2base64(bytes));
+    	Logger.d(TAG, UtilByte.byte2hex(bytes));
     	
     	TestTlv test2 = tlv.fromBytes(bytes, TestTlv.class);
     	String json = ByteGson.customGson.toJson(test2);

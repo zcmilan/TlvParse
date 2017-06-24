@@ -1,7 +1,6 @@
 package com.gmrz.utils.tlv.tlv;
 
 
-import com.gmrz.utils.tlv.util.Util;
 import com.gmrz.utils.tlv.util.UtilByte;
 import com.gmrz.utils.tlv.util.UtilTlv;
 
@@ -61,7 +60,7 @@ public class AkBeanTlv {
 			this.length = 0;
 		}else{
 			this.value = new byte[2];
-			Util.setShort16(this.value, (short)0, shortValue);
+			UtilByte.setShort16(this.value, (short)0, shortValue);
 			this.length = AkBeanTlv.TLV_LENGTH_SIZE;
 		}
 		return this;

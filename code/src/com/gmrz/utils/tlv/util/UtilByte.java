@@ -1,11 +1,12 @@
 package com.gmrz.utils.tlv.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.apache.commons.codec.Charsets;
-import org.apache.commons.codec.binary.Base64;
 
 public class UtilByte {
+	
+	private static final String TAG = "UtilByte";
 
 	public static void revert(byte[] bytes){
 		short i=0;
@@ -22,8 +23,8 @@ public class UtilByte {
 	public static short revert(short value){
 		byte[] tmp = new byte[2];
 		short result = (short)0;
-		Util.setShort16(tmp, (short)0, value);
-		result = Util.getShort(tmp, (short)0);
+		setShort16(tmp, (short)0, value);
+		result = getShort(tmp, (short)0);
 		return result;
 	}
 	
@@ -64,13 +65,13 @@ public class UtilByte {
 		return nextPos;
 	}
 
-	public static byte[] base642byte(String base64){
-		return Base64.decodeBase64(base64);
-	}
-
-	public static String byte2base64(byte[] raw) {
-		return Base64.encodeBase64URLSafeString(raw);
-	}
+//	public static byte[] base642byte(String base64){
+//		return Base64.decodeBase64(base64);
+//	}
+//
+//	public static String byte2base64(byte[] raw) {
+//		return Base64.encodeBase64URLSafeString(raw);
+//	}
 
 	public static boolean isSame(byte[] a1,byte[] a2){
 		if(a1.length != a2.length){
@@ -115,4 +116,57 @@ public class UtilByte {
 		}
 		return str;
 	}
+	
+	public static final int arrayCopy (byte[] src, int srcOff, byte[] dest, int destOff, int length){
+		int result = -1;
+		if(src.length < srcOff){
+			Logger.e(TAG, "arrayCopy return error, src.length < srcOff");
+			return result;
+		}
+		if(src.length < (length + srcOff)){
+			Logger.e(TAG, "arrayCopy return error, src.length < srcOff");
+			return result;
+		}
+		if(dest.length < destOff){
+			return result;
+		}
+		if(dest.length < (destOff+length)){
+			return result;
+		}
+		int srcPosition=srcOff;
+		int destPosition=destOff;
+		for(int i=0;i<length;i++){
+			dest[destPosition]=src[srcPosition];
+			destPosition++;
+			srcPosition++;
+		}
+		return destPosition;
+	}
+	
+	public static final short getShort (byte[] bArray, int bOff) {
+		return (short) (((bArray[bOff + 1] << 8) | bArray[bOff + 0] & 0xff));  
+	}
+	
+	public static final short setShort16(byte[] bArray, short bOff, short sValue){
+		bArray[bOff + 1] = (byte) (sValue >> 8);  
+		bArray[bOff + 0] = (byte) (sValue >> 0);  
+		return (short)(bOff + 2);
+	}
+
+	public static final short setShort8(byte[] bArray, short bOff, short sValue){
+		bArray[bOff + 0] = (byte) (sValue >> 0);
+		return (short)(bOff + 1);
+	}
+	
+	public static final short makeShort(byte one , byte two){
+		return (short) (((one << 8) | two & 0xff));  
+	}
+	
+	public static String random(int length) {  
+	    StringBuilder builder = new StringBuilder(length);  
+	    for (int i = 0; i < length; i++) {  
+	        builder.append((char) (ThreadLocalRandom.current().nextInt(33, 128)));  
+	    }  
+	    return builder.toString();  
+	} 
 }

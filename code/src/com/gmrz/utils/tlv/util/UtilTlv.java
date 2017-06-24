@@ -14,13 +14,13 @@ public class UtilTlv {
 	public static AkBeanTlv readTLV(byte[] bytes, short offset){
 		Logger.d(TAG,"readTLV hex:"+UtilByte.byte2hex(bytes));
 		AkBeanTlv result = new AkBeanTlv();
-		short lEndianTag = Util.getShort(bytes,offset);
+		short lEndianTag = UtilByte.getShort(bytes,offset);
 		short tag = UtilByte.revert(lEndianTag);
 		result.setTag(tag);
-		short lEndianLength = Util.getShort(bytes, offset+2);
+		short lEndianLength = UtilByte.getShort(bytes, offset+2);
 		short length = UtilByte.revert(lEndianLength);
 		byte[] tmp = new byte[length];
-		Util.arrayCopy(bytes,(short)(offset + AkBeanTlv.TLV_LENGTH_SIZE + AkBeanTlv.TLV_TAG_SIZE),tmp,(short)0,length);
+		UtilByte.arrayCopy(bytes,(short)(offset + AkBeanTlv.TLV_LENGTH_SIZE + AkBeanTlv.TLV_TAG_SIZE),tmp,(short)0,length);
 		result.setValue(tmp);
 		if(verifyEmpty(result.getValue())){
 
@@ -56,9 +56,9 @@ public class UtilTlv {
 			short size = (short) (AkBeanTlv.TLV_TAG_SIZE + AkBeanTlv.TLV_LENGTH_SIZE);
 			byte[] result = new byte[size];
 			short lEndianTag = UtilByte.revert(tlv.getTag());
-			Util.setShort16(result, (short) 0, lEndianTag);
+			UtilByte.setShort16(result, (short) 0, lEndianTag);
 			short lEndianLength = UtilByte.revert(tlv.getLength());
-			Util.setShort16(result, (short) 2, lEndianLength);
+			UtilByte.setShort16(result, (short) 2, lEndianLength);
 			return result;
 		}else{
 			if(tlv.getValue().length < tlv.getLength()){
@@ -67,13 +67,13 @@ public class UtilTlv {
 			short size = (short) (AkBeanTlv.TLV_TAG_SIZE + AkBeanTlv.TLV_LENGTH_SIZE + tlv.getLength());
 			byte[] result = new byte[size];
 			short lEndianTag = UtilByte.revert(tlv.getTag());
-			Util.setShort16(result, (short) 0, lEndianTag);
+			UtilByte.setShort16(result, (short) 0, lEndianTag);
 			short lEndianLength = UtilByte.revert(tlv.getLength());
-			Util.setShort16(result, (short) 2, lEndianLength);
+			UtilByte.setShort16(result, (short) 2, lEndianLength);
 			if(tlv.getLength() == 0){
 				Logger.d(TAG,"tlv length is 0");
 			}else{
-				Util.arrayCopy(tlv.getValue(), (short)0, result, (short)4, tlv.getLength());
+				UtilByte.arrayCopy(tlv.getValue(), (short)0, result, (short)4, tlv.getLength());
 			}
 			return result;
 		}
@@ -99,7 +99,7 @@ public class UtilTlv {
 			AkBeanTlv tlv = tlvs[i];
 			if(tlv != null){
 				byte[] tmp = tlv.toBytes();
-				Util.arrayCopy(tmp, (short)0, value, position, (short)tmp.length);
+				UtilByte.arrayCopy(tmp, (short)0, value, position, (short)tmp.length);
 				position+=tmp.length;
 			}
 		}
@@ -126,7 +126,7 @@ public class UtilTlv {
 			AkBeanTlv tlv = tlvs.get(i);
 			if(tlv != null){
 				byte[] tmp = tlv.toBytes();
-				Util.arrayCopy(tmp, (short)0, value, position, (short)tmp.length);
+				UtilByte.arrayCopy(tmp, (short)0, value, position, (short)tmp.length);
 				position+=tmp.length;
 			}
 		}
@@ -145,13 +145,13 @@ public class UtilTlv {
 			return false;
 		}
 		
-		short lEndianTag = Util.getShort(bytes,0);
+		short lEndianTag = UtilByte.getShort(bytes,0);
 		short tag = UtilByte.revert(lEndianTag);
 		if(!ConstantTag.TAGMAP.containsKey(tag)){
 			return false;
 		}
 		short size = (short)bytes.length;
-		short lEndianlength = Util.getShort(bytes, (short)2);
+		short lEndianlength = UtilByte.getShort(bytes, (short)2);
 		short length = UtilByte.revert(lEndianlength);
 		if(length != size - (AkBeanTlv.TLV_LENGTH_SIZE + AkBeanTlv.TLV_TAG_SIZE)){
 			return false;
@@ -167,12 +167,12 @@ public class UtilTlv {
 		short size = (short)bytes.length;
 		short position = 0;
 		while(position < size){
-			short lEndianTag = Util.getShort(bytes,0);
+			short lEndianTag = UtilByte.getShort(bytes,0);
 			short tag = UtilByte.revert(lEndianTag);
 			if(!ConstantTag.TAGMAP.containsKey(tag)){
 				return 0;
 			}
-			short lEndianLength = Util.getShort(bytes, (short)(2+position));
+			short lEndianLength = UtilByte.getShort(bytes, (short)(2+position));
 			short length = UtilByte.revert(lEndianLength);
 			short endPosition = (short) (position + AkBeanTlv.TLV_LENGTH_SIZE + AkBeanTlv.TLV_TAG_SIZE);
 			if(length > size - endPosition){

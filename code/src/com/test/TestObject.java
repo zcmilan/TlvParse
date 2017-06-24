@@ -9,6 +9,6 @@ public class TestObject {
 	@TLVMsg(value=0x1001,type=TLVType.BYTES)
 	public byte[] bytes;
 	
-//	@TLVMsg(value=0x1002,type=TLVType.SHORT)
-//	public short shorts;
+	@TLVMsg(value=0x1002,type=TLVType.SHORT)
+	public short shorts;
 }

@@ -1,15 +1,15 @@
 package com.gmrz.utils.tlv.tlv;
 
-import com.gmrz.utils.tlv.util.Logger;
-import com.gmrz.utils.tlv.util.Util;
-import com.gmrz.utils.tlv.util.UtilTlv;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.gmrz.utils.tlv.util.Logger;
+import com.gmrz.utils.tlv.util.UtilByte;
+import com.gmrz.utils.tlv.util.UtilTlv;
 
 /**
  * Created by zhangchao on 6/12/17.
@@ -96,7 +96,7 @@ public abstract class Msg<T> {
 
         @Override
         public void fromBeanTlv(AkBeanTlv tlv) {
-            short tmp = Util.getShort(tlv.getValue(),0);
+            short tmp = UtilByte.getShort(tlv.getValue(),0);
             setValue(tmp);
         }
     }
