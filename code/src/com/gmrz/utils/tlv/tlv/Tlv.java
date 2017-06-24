@@ -11,7 +11,7 @@ public class Tlv {
 
     private static final String TAG = "Tlv";
 
-    public byte[] toBytes(Msg msg){
+    public byte[] msgToBytes(Msg msg){
         if(msg == null){
             Logger.e(TAG,"toBytes error , msg is null");
             return null;
@@ -19,7 +19,7 @@ public class Tlv {
         return msg.toByte();
     }
 
-    public Msg fromBytes(byte[] bytes,Class classz){
+    public Msg msgFromBytes(byte[] bytes,Class classz){
         Msg msg = null;
         if(classz == null){
             Logger.e(TAG,"fromBytes error , classz is null");
@@ -45,4 +45,17 @@ public class Tlv {
         return msg;
     }
 
+	public byte[] toBytes(Object o){
+		AnnotationParse parse = new AnnotationParse();
+		AkBeanTlv tlv = parse.toAkBeanTlv(o);
+		byte[] bytes = UtilTlv.writeTLV(tlv);
+		return bytes;
+	}
+	
+	public <T> T fromBytes(byte[] bytes,Class<T> classz){
+		AnnotationParse parse = new AnnotationParse();
+		AkBeanTlv tlv = UtilTlv.readTLV(bytes, (short)0);
+		T object = parse.fromAkBeanTlv(tlv, classz);
+		return object;
+	}
 }

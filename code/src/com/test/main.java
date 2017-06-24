@@ -1,6 +1,7 @@
 package com.test;
 
-import com.gmrz.utils.tlv.tlv.Tlv2;
+import com.gmrz.utils.tlv.constant.ConstantTag;
+import com.gmrz.utils.tlv.tlv.Tlv;
 import com.gmrz.utils.tlv.util.Logger;
 import com.gmrz.utils.tlv.util.UtilByte;
 
@@ -10,7 +11,7 @@ public class main {
 	
     public static void main(String args[]) { 
     	Logger.d(TAG, "START");
-    	Tlv2 tlv = new Tlv2();
+    	Tlv tlv = new Tlv();
 //    	
 //    	short value = tlv.getTag(TestTlv.class);
 //    	TLVType type = tlv.getType(TestTlv.class);
