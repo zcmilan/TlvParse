@@ -27,15 +27,15 @@ public class UtilByte {
 		return result;
 	}
 	
-	public static String toBase64(byte[] bytes){
-		String result = Base64.encodeBase64URLSafeString(bytes);
-		return result;
-	}
-	
-	public static byte[] fromBase64(String base64){
-		byte[] result = Base64.decodeBase64(base64);
-		return result;
-	}
+//	public static String toBase64(byte[] bytes){
+//		String result = Base64.encodeBase64URLSafeString(bytes);
+//		return result;
+//	}
+//	
+//	public static byte[] fromBase64(String base64){
+//		byte[] result = Base64.decodeBase64(base64);
+//		return result;
+//	}
 
 	public static String byte2hex(byte[] raw) {
 		if(raw == null){
@@ -92,7 +92,7 @@ public class UtilByte {
 		byte[] bytes = null;
 		if(value != null){
 			try {
-				bytes = value.getBytes("utf-8");
+				bytes = value.getBytes("UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,7 +107,7 @@ public class UtilByte {
 		String str = "";
 		if(bytes != null){
 			try {
-				str = new String(bytes,"utf-8");
+				str = new String(bytes,"UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
